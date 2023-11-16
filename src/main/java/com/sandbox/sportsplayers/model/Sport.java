@@ -1,4 +1,25 @@
-package com.sandbox.sportsplayers;
+package com.sandbox.sportsplayers.model;
 
-public class sport {
+import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
+
+@Entity
+@Table(name = "sports")
+public class Sport {
+    @Id
+    private String name;
+    @ManyToMany
+    @JoinTable(
+            name = "players_sports",
+            joinColumns = @JoinColumn(name = "sport_name"),
+            inverseJoinColumns = @JoinColumn(name = "player_email")
+    )
+    private Set<Player> players;
+
+    public void clearPlayers() {
+        for (Player player : this.players) {
+            player.getSports().remove(this);
+        }
+    }
 }

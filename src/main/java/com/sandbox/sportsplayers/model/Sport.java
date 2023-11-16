@@ -17,6 +17,10 @@ public class Sport {
     )
     private Set<Player> players;
 
+    public Sport(String name) {
+        this.name = name;
+    }
+
     public void clearPlayers() {
         for (Player player : this.players) {
             player.getSports().remove(this);

@@ -32,14 +32,14 @@ public class PlayerService {
 
     }
 
-    public List<Player> findPlayersBySports(List<String> sports, int page) {
-        int pageSize = 10;
-        int offset = page * pageSize;
-        if (sports == null || sports.isEmpty()) {
-            return playerRepository.findAllWithPagination(offset, pageSize);
-        } else {
-            return playerRepository.findBySportsNameInWithPagination(sports, offset, pageSize);
-        }
-    }
+//    public List<Player> findPlayersBySports(List<String> sports, int page) {
+//        int pageSize = 10;
+//        int offset = page * pageSize;
+//        if (sports == null || sports.isEmpty()) {
+//            return playerRepository.findAllWithPagination(offset, pageSize);
+//        } else {
+//            return playerRepository.findBySportsNameInWithPagination(sports, offset, pageSize);
+//        }
+//    }
 
 }

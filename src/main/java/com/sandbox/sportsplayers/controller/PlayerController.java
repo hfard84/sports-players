@@ -24,9 +24,9 @@ public class PlayerController {
         return playerService.updatePlayerSports(email, sportNames);
     }
 
-    @GetMapping
-    public List<Player> getPlayersBySport(@RequestParam(required = false) List<String> sports,
-                                          @RequestParam(defaultValue = "0") int page) {
-        return playerService.findPlayersBySports(sports, page);
-    }
+//    @GetMapping
+//    public List<Player> getPlayersBySport(@RequestParam(required = false) List<String> sports,
+//                                          @RequestParam(defaultValue = "0") int page) {
+//        return playerService.findPlayersBySports(sports, page);
+//    }
 }

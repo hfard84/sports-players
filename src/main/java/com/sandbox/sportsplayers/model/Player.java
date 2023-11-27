@@ -1,7 +1,6 @@
 package com.sandbox.sportsplayers.model;
 
-import javax.persistence.*;
-import java.util.List;
+import jakarta.persistence.*;
 import java.util.Set;
 
 @Entity
@@ -28,7 +27,15 @@ public class Player {
         return sports;
     }
 
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
     public enum Gender {
-        MALE, FEMALE
+        male, female
     }
 }

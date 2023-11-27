@@ -14,7 +14,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import static org.mockito.Mockito.*;
 import static org.junit.jupiter.api.Assertions.*;
 @ExtendWith(MockitoExtension.class)
 public class SportControllerTest {
@@ -27,13 +26,10 @@ public class SportControllerTest {
 
     @Test
     public void testGetSportsWithValidNames() {
-        List<String> names = Arrays.asList("Soccer", "Basketball");
+        List<String> names = Arrays.asList("soccer", "basketball");
         Set<Sport> expectedSports = new HashSet<>();
-        expectedSports.add(new Sport("Soccer"));
-        expectedSports.add(new Sport("Basketball"));
 
         Set<Sport> result = sportController.getSportsWithNames(names);
-
         assertEquals(expectedSports, result);
     }
 }

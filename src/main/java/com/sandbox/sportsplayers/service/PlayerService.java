@@ -13,33 +13,37 @@ import java.util.Set;
 @Service
 public class PlayerService {
 
-    @Autowired
-    private PlayerRepository playerRepository;
+    private final PlayerRepository playerRepository;
+    private final SportRepository sportRepository;
 
     @Autowired
-    private SportRepository sportRepository;
+    public PlayerService(PlayerRepository playerRepository, SportRepository sportRepository) {
+        this.playerRepository = playerRepository;
+        this.sportRepository = sportRepository;
+    }
 
     public List<Player> findPlayersWithNoSports() {
         return playerRepository.findPlayersWithNoSports();
     }
 
     @Transactional
-    public Player updatePlayerSports(String email, List<String> sportNames){
+    public Player updatePlayerSports(String email, Set<String> sportNames) {
         Player player = playerRepository.findByEmail(email);
         Set<Sport> sports = sportRepository.findByNameIn(sportNames);
         player.setSports(sports);
-        return playerRepository.save(player);
+        playerRepository.save(player);
+        return player;
 
     }
 
-    public List<Player> findPlayersBySports(List<String> sports, int page) {
-        int pageSize = 10;
-        int offset = page * pageSize;
-        if (sports == null || sports.isEmpty()) {
-            return playerRepository.findAllWithPagination(offset, pageSize);
-        } else {
-            return playerRepository.findBySportsNameInWithPagination(sports, offset, pageSize);
-        }
-    }
+//    public List<Player> findPlayersBySports(List<String> sports, int page) {
+//        int pageSize = 10;
+//        int offset = page * pageSize;
+//        if (sports == null || sports.isEmpty()) {
+//            return playerRepository.findAllWithPagination(offset, pageSize);
+//        } else {
+//            return playerRepository.findBySportsNameInWithPagination(sports, offset, pageSize);
+//        }
+//    }
 
 }

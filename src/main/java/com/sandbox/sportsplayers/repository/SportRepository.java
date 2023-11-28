@@ -9,13 +9,13 @@ import java.util.Set;
 
 public interface SportRepository extends JpaRepository<Sport, String> {
 
+    Set<Sport> findByNameIn(Set<String> names);
+
+    Sport findByName(String name);
+
     @Query("SELECT s FROM Sport s WHERE SIZE(s.players) >= 2")
     List<Sport> findSportsWithMultiplePlayers();
 
     @Query("SELECT s FROM Sport s WHERE SIZE(s.players) = 0")
     List<Sport> findSportsWithNoPlayers();
-
-    Set<Sport> findByNameIn(List<String> names);
-
-    Sport findByName(String name);
 }

@@ -13,10 +13,22 @@ import java.util.Set;
 @Service
 public class SportService {
 
-    @Autowired
-    private SportRepository sportRepository;
+    private final SportRepository sportRepository;
 
-    public Set<Sport> findSportsByNames(List<String> names) {
+    @Autowired
+    public SportService(SportRepository sportRepository) {
+        this.sportRepository = sportRepository;
+    }
+
+    public List<Sport> findAllSports() {
+        return sportRepository.findAll();
+    }
+
+    public Sport findSportByName(String name) {
+        return sportRepository.findByName(name);
+    }
+
+    public Set<Sport> findSportsByNames(Set<String> names) {
         return sportRepository.findByNameIn(names);
     }
 

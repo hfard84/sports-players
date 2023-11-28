@@ -9,12 +9,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @SpringBootTest
 public class PlayerRepositoryTest {
@@ -28,7 +29,7 @@ public class PlayerRepositoryTest {
     @Test
     public void testSportConnection() {
         Player retrievedPlayer = playerRepository.findById("player.a@players.com").orElse(null);
-        assertThat(retrievedPlayer).isNotNull();
+        assertNotNull(retrievedPlayer);
     }
 
     @Test
@@ -40,27 +41,27 @@ public class PlayerRepositoryTest {
     @Test
     public void testFindByEmail() {
         Player retrievedPlayer = playerRepository.findByEmail("player.a@players.com");
-        assertThat(retrievedPlayer).isNotNull();
+        assertNotNull(retrievedPlayer);
     }
 
     @Test
     public void testFindByGenderLevelAge() {
         List<Player> retrievedPlayers = playerRepository.findByGenderAndLevelAndAge(Player.Gender.male,2,32);
-        assertThat(retrievedPlayers).isNotNull();
+        assertNotNull(retrievedPlayers);
     }
 
     @Test
     public void testFindPlayersWithNoSports() {
         List<Player> retrievedPlayers = playerRepository.findPlayersWithNoSports();
-        assertThat(retrievedPlayers).isNotNull();
+        assertNotNull(retrievedPlayers);
         assertEquals(retrievedPlayers.get(0).getEmail(), "player.d@players.com");
     }
 
     @Test
     public void testFindPlayersBySportsName() {
-        Set<Sport> retrievedSports = sportRepository.findByNameIn(Arrays.asList("soccer", "basketball"));
+        Set<Sport> retrievedSports = sportRepository.findByNameIn(new HashSet<>(Arrays.asList("soccer", "basketball")));
         List<Player> retrievedPlayers = playerRepository.findPlayersBySportsName(retrievedSports.stream().map(Sport::getName).collect(Collectors.toList()));
-        assertThat(retrievedPlayers).isNotNull();
+        assertNotNull(retrievedPlayers);
         assertEquals(retrievedPlayers.size(), 3);
     }
 }

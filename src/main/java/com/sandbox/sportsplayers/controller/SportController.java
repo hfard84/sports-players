@@ -19,7 +19,7 @@ public class SportController {
     }
 
     @GetMapping
-    public Set<Sport> getSportsWithNames(@RequestParam List<String> name)
+    public Set<Sport> getSportsWithNames(@RequestParam Set<String> name)
     {
         try{
             return sportService.findSportsByNames(name);

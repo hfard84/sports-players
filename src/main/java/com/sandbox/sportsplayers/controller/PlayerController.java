@@ -2,17 +2,20 @@ package com.sandbox.sportsplayers.controller;
 
 import com.sandbox.sportsplayers.model.Player;
 import com.sandbox.sportsplayers.service.PlayerService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Set;
 
 @RestController
 @RequestMapping("/api/players")
 public class PlayerController {
 
-    @Autowired
-    private PlayerService playerService;
+    private final PlayerService playerService;
+
+    public PlayerController(PlayerService playerService){
+        this.playerService = playerService;
+    }
     @GetMapping("/no-sports")
     public List<Player> getPlayersWithNoSports() {
         return playerService.findPlayersWithNoSports();
@@ -20,7 +23,7 @@ public class PlayerController {
 
     @PutMapping("/{email}/update-sports")
     public Player updatePlayerSports(@PathVariable String email, @RequestParam
-    List<String> sportNames) {
+    Set<String> sportNames) {
         return playerService.updatePlayerSports(email, sportNames);
     }
 

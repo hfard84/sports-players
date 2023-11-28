@@ -10,11 +10,11 @@ import com.sandbox.sportsplayers.repository.SportRepository;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 public class SportRepositoryTest {
@@ -26,7 +26,7 @@ public class SportRepositoryTest {
     public void testSportConnection() {
 
         Sport retrievedSport = sportRepository.findById("football").orElse(null);
-        assertThat(retrievedSport).isNotNull();
+        assertNotNull(retrievedSport);
     }
 
     @Test
@@ -38,30 +38,30 @@ public class SportRepositoryTest {
 
     @Test
     public void testFindByNameIn() {
-        Set<Sport> retrievedSports = sportRepository.findByNameIn(Arrays.asList("football", "basketball"));
+        Set<Sport> retrievedSports = sportRepository.findByNameIn(new HashSet<>(Arrays.asList("football", "basketball")));
         assertEquals(1, retrievedSports.size());
     }
 
     @Test
     public void testFindByName() {
         Sport retrievedSports = sportRepository.findByName("football");
-        assertThat(retrievedSports).isNotNull();
-        assertThat(retrievedSports.getName()).isEqualTo("football");
+        assertNotNull(retrievedSports);
+        assertEquals(retrievedSports.getName(), "football");
     }
 
     @Test
     public void testFindSportsWithMultiplePlayers() {
         List<Sport> retrievedSports = sportRepository.findSportsWithMultiplePlayers();
-        assertThat(retrievedSports).isNotNull();
+        assertNotNull(retrievedSports);
         assertEquals(1, retrievedSports.size());
-        assertThat(retrievedSports.get(0).getName()).isEqualTo("soccer");
+        assertEquals(retrievedSports.get(0).getName(), "soccer");
     }
 
     @Test
     public void testFindSportsWithNoPlayers() {
         List<Sport> retrievedSports = sportRepository.findSportsWithNoPlayers();
-        assertThat(retrievedSports).isNotNull();
+        assertNotNull(retrievedSports);
         assertEquals(1, retrievedSports.size());
-        assertThat(retrievedSports.get(0).getName()).isEqualTo("football");
+        assertEquals(retrievedSports.get(0).getName(), "football");
     }
 }

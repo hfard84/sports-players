@@ -27,11 +27,12 @@ public class PlayerService {
     }
 
     @Transactional
-    public Player updatePlayerSports(String email, List<String> sportNames) {
+    public Player updatePlayerSports(String email, Set<String> sportNames) {
         Player player = playerRepository.findByEmail(email);
         Set<Sport> sports = sportRepository.findByNameIn(sportNames);
         player.setSports(sports);
-        return playerRepository.save(player);
+        playerRepository.save(player);
+        return player;
 
     }
 

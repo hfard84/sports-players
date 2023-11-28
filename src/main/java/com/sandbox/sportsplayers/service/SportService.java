@@ -28,7 +28,7 @@ public class SportService {
         return sportRepository.findByName(name);
     }
 
-    public Set<Sport> findSportsByNames(List<String> names) {
+    public Set<Sport> findSportsByNames(Set<String> names) {
         return sportRepository.findByNameIn(names);
     }
 

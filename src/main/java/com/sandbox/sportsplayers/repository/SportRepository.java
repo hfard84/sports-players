@@ -3,14 +3,13 @@ package com.sandbox.sportsplayers.repository;
 import com.sandbox.sportsplayers.model.Sport;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.lang.NonNull;
 
 import java.util.List;
 import java.util.Set;
 
 public interface SportRepository extends JpaRepository<Sport, String> {
 
-    Set<Sport> findByNameIn(List<String> names);
+    Set<Sport> findByNameIn(Set<String> names);
 
     Sport findByName(String name);
 

@@ -19,6 +19,14 @@ public class Player {
     @ManyToMany(mappedBy = "players")
     private Set<Sport> sports;
 
+    public Player(String email) {
+        this.email = email;
+    }
+
+    public Player() {
+
+    }
+
     public void setSports(Set<Sport> sports) {
         this.sports = sports;
     }

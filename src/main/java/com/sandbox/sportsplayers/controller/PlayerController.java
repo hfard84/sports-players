@@ -1,10 +1,10 @@
 package com.sandbox.sportsplayers.controller;
 
+import com.sandbox.sportsplayers.dto.PlayerDTO;
 import com.sandbox.sportsplayers.model.Player;
 import com.sandbox.sportsplayers.service.PlayerService;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 import java.util.Set;
 
 @RestController
@@ -16,8 +16,14 @@ public class PlayerController {
     public PlayerController(PlayerService playerService){
         this.playerService = playerService;
     }
+
+    @GetMapping
+    public Set<PlayerDTO> getAllPlayers() {
+        return playerService.findAllPlayers();
+    }
+
     @GetMapping("/no-sports")
-    public List<Player> getPlayersWithNoSports() {
+    public Set<PlayerDTO> getPlayersWithNoSports() {
         return playerService.findPlayersWithNoSports();
     }
 

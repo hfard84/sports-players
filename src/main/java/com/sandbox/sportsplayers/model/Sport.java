@@ -38,4 +38,13 @@ public class Sport {
     public void setName(String name) {
         this.name = name;
     }
+
+    public Set<Player> getPlayers() {
+        return players;
+    }
+
+    public void setPlayers(Set<Player> players) {
+        this.players = players;
+    }
 }
+

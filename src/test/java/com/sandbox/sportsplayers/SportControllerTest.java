@@ -1,6 +1,7 @@
 package com.sandbox.sportsplayers;
 
 import com.sandbox.sportsplayers.controller.SportController;
+import com.sandbox.sportsplayers.dto.SportDTO;
 import com.sandbox.sportsplayers.model.Sport;
 import com.sandbox.sportsplayers.service.SportService;
 import org.junit.jupiter.api.Test;
@@ -29,19 +30,16 @@ public class SportControllerTest {
 
     @Test
     public void testGetSportsWithValidNames() {
-        // Setup
         Set<String> names = new HashSet<>(Arrays.asList("football", "tennis", "basketball"));
-        Set<Sport> expectedSports = new HashSet<>();
-        expectedSports.add(new Sport("football"));
-        expectedSports.add(new Sport("tennis"));
+        Set<SportDTO> expectedSports = new HashSet<>();
+        expectedSports.add(new SportDTO("football"));
+        expectedSports.add(new SportDTO("tennis"));
 
         when(sportService.findSportsByNames(names)).thenReturn(expectedSports);
 
-        // Execution
-        Set<Sport> actualSports = sportController.getSportsWithNames(names);
+        Set<SportDTO> actualSports = sportController.getSportsWithNames(names);
 //        System.out.println(" === " + actualSports.stream().map(Sport::getName).toList());
 //        System.out.println(" === " + expectedSports.stream().map(Sport::getName).toList());
-        // Verification
         assertNotNull(actualSports);
         assertEquals(expectedSports, actualSports);
         verify(sportService).findSportsByNames(names);
@@ -49,15 +47,11 @@ public class SportControllerTest {
 
     @Test
     public void testGetSportsWithInvalidNames() {
-        // Setup
+
         Set<String> names = new HashSet<>(List.of("INVALID"));
 
         when(sportService.findSportsByNames(names)).thenThrow(new RuntimeException());
-
-        // Execution
-        Set<Sport> actualSports = sportController.getSportsWithNames(names);
-
-        // Verification
+        Set<SportDTO> actualSports = sportController.getSportsWithNames(names);
         assertTrue(actualSports.isEmpty());
         verify(sportService).findSportsByNames(names);
 

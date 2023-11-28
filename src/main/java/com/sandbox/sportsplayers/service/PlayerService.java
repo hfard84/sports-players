@@ -1,5 +1,6 @@
 package com.sandbox.sportsplayers.service;
 
+import com.sandbox.sportsplayers.dto.PlayerDTO;
 import com.sandbox.sportsplayers.model.Player;
 import com.sandbox.sportsplayers.model.Sport;
 import com.sandbox.sportsplayers.repository.*;
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 public class PlayerService {
@@ -22,8 +24,14 @@ public class PlayerService {
         this.sportRepository = sportRepository;
     }
 
-    public List<Player> findPlayersWithNoSports() {
-        return playerRepository.findPlayersWithNoSports();
+    public Set<PlayerDTO> findAllPlayers() {
+        List<Player> players = playerRepository.findAll();
+        return players.stream().map(PlayerDTO::new).collect(Collectors.toSet());
+    }
+
+    public Set<PlayerDTO> findPlayersWithNoSports() {
+        List<Player> players = playerRepository.findPlayersWithNoSports();
+        return players.stream().map(PlayerDTO::new).collect(Collectors.toSet());
     }
 
     @Transactional
@@ -33,7 +41,6 @@ public class PlayerService {
         player.setSports(sports);
         playerRepository.save(player);
         return player;
-
     }
 
 //    public List<Player> findPlayersBySports(List<String> sports, int page) {

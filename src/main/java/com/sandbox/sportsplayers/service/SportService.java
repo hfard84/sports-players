@@ -13,9 +13,6 @@ import java.util.Set;
 @Service
 public class SportService {
 
-//    @Autowired
-//    private SportRepository sportRepository;
-
     private final SportRepository sportRepository;
 
     @Autowired

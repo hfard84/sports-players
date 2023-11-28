@@ -13,8 +13,12 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+
 @ExtendWith(MockitoExtension.class)
 public class SportControllerTest {
 
@@ -26,10 +30,37 @@ public class SportControllerTest {
 
     @Test
     public void testGetSportsWithValidNames() {
-        List<String> names = Arrays.asList("soccer", "basketball");
+        // Setup
+        List<String> names = Arrays.asList("football", "tennis", "basketball");
         Set<Sport> expectedSports = new HashSet<>();
+        expectedSports.add(new Sport("football"));
+        expectedSports.add(new Sport("tennis"));
 
-        Set<Sport> result = sportController.getSportsWithNames(names);
-        assertEquals(expectedSports, result);
+        when(sportService.findSportsByNames(names)).thenReturn(expectedSports);
+
+        // Execution
+        Set<Sport> actualSports = sportController.getSportsWithNames(names);
+//        System.out.println(" === " + actualSports.stream().map(Sport::getName).toList());
+//        System.out.println(" === " + expectedSports.stream().map(Sport::getName).toList());
+        // Verification
+        assertNotNull(actualSports);
+        assertEquals(expectedSports, actualSports);
+        verify(sportService).findSportsByNames(names);
+    }
+
+    @Test
+    public void testGetSportsWithInvalidNames() {
+        // Setup
+        List<String> names = List.of("INVALID");
+
+        when(sportService.findSportsByNames(names)).thenThrow(new RuntimeException());
+
+        // Execution
+        Set<Sport> actualSports = sportController.getSportsWithNames(names);
+
+        // Verification
+        assertTrue(actualSports.isEmpty());
+        verify(sportService).findSportsByNames(names);
+
     }
 }
